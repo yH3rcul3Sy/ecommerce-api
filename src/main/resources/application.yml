@@ -1,0 +1,37 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: ecommerce-api
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:ecommerce_db}?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      # 'update': cria/ajusta as tabelas automaticamente a partir das entidades.
+      # Otimo para desenvolvimento. Em producao o ideal e usar uma ferramenta
+      # de migration (Flyway/Liquibase) com ddl-auto: validate.
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+# Configuracoes proprias da aplicacao (lidas pelo JwtService)
+app:
+  jwt:
+    # Em producao, SEMPRE defina via variavel de ambiente (nunca deixe fixo no codigo).
+    secret: ${JWT_SECRET:nNTdAgHD10POOkqpW3yw8mpI2vmIiigmoPV548cDSjg=}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 horas
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
