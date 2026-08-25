@@ -22,12 +22,14 @@ public class OrderService {
     private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
 
+    @Transactional(readOnly = true)
     public List<OrderResponse> findAll() {
         return orderRepository.findAll().stream()
                 .map(OrderResponse::from)
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public OrderResponse findById(Long id) {
         return OrderResponse.from(getOrderOrThrow(id));
     }

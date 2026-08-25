@@ -20,12 +20,14 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
 
+    @Transactional(readOnly = true)
     public List<PaymentResponse> findAll() {
         return paymentRepository.findAll().stream()
                 .map(PaymentResponse::from)
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public PaymentResponse findById(Long id) {
         return PaymentResponse.from(getPaymentOrThrow(id));
     }
